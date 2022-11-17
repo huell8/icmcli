@@ -6,16 +6,18 @@ if [ $(date +%H) -lt 6 ]; then
     DATE="$(date +%Y%m%d --date="1 day ago")18"
 else
     HOUR=$(($(($(date +%H)/6))*6))
-    HOUR="$HOUR"
-    if [ $(expr length $HOUR) -lt 2]; then
-        $HOUR="0$HOUR"
+    if [ $HOUR -eq 0 ]; then
+        HOUR="00"
+    fi
+    if [ $HOUR -eq 6 ]; then
+        HOUR="06"
     fi
     DATE="$(date +%Y%m%d)${HOUR}"
 fi
 CITY="&row=342&col=208" # gdynia
 LANG="en"
-OUT="$HOME/Downloads/forecast.png"
-EXEC="sxiv -z 200"
+OUT="/Users/huell/Downloads/forecast.png"
+EXEC="open"
 
 function usage {
     echo "
@@ -93,6 +95,16 @@ fi
 
 echo "downloading: https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}"
 curl "https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}" > $OUT
+if [ $(wc -c "$OUT" | awk '{print $1}') -lt 100 ]; then
+    DATE="$(date +%Y%m%d --date="1 day ago")18"
+    echo "error: trying: https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}"
+    curl "https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}" > $OUT
+    if [ $(wc -c "$OUT" | awk '{print $1}') -lt 100 ]; then
+        echo "error fetching forecast"
+        exit 1
+    fi
+fi
+
 
 if [[ $EXEC == "donotopen" ]]; then
     echo "saved to $OUT"
