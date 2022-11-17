@@ -16,8 +16,8 @@ else
 fi
 CITY="&row=342&col=208" # gdynia
 LANG="en"
-OUT="/Users/huell/Downloads/forecast.png"
-EXEC="open"
+OUT="$HOME/Downloads/forecast.png"
+EXEC="sxiv -s 200"
 
 function usage {
     echo "
