@@ -79,6 +79,9 @@ while getopts "d:c:l:e:h" opt; do
         e)
             EXEC=$OPTARG
         ;;
+        o)
+            OUT=$OPTARG
+        ;;
         h)  usage ;;
         \?) usage ;;
         *)  usage  ;;
