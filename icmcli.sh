@@ -51,7 +51,7 @@ for arg in "$@"; do
         *)        set -- "$@" "$arg" ;;
     esac
 done
-while getopts "d:c:l:e:h" opt; do
+while getopts "d:c:l:e:o:h" opt; do
     case ${opt} in
         d)
             if [ $(expr length "$OPTARG") -ne 10 ] ||
@@ -98,7 +98,7 @@ fi
 
 echo "downloading: https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}"
 curl "https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}" > $OUT
-if [ $(wc -c "$OUT" | awk '{print $1}') -lt 100 ]; then
+if [ $(wc -c $OUT | awk '{print $1}') -lt 100 ]; then
     DATE="$(date +%Y%m%d --date="1 day ago")18"
     echo "error: trying: https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}"
     curl "https://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=${DATE}${CITY}&lang=${LANG}" > $OUT
