@@ -17,7 +17,7 @@ fi
 CITY="&row=342&col=208" # gdynia
 LANG="en"
 OUT="$HOME/Downloads/forecast.png"
-EXEC="sxiv -s 200"
+EXEC="sxiv -z 200"
 
 function usage {
     echo "
