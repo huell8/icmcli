@@ -113,5 +113,5 @@ if [[ $EXEC == "donotopen" ]]; then
     echo "saved to $OUT"
     exit 0
 else
-    $EXEC $OUT
+    $EXEC $OUT &
 fi
